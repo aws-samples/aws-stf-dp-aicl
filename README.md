@@ -92,8 +92,8 @@ Voilà. You have everything ready.
 
 This section provides links to additional resources that may help deploy and operate this application: 
 
+- [Smart Territory Framework - Foundations for Smart Territories](https://youtu.be/4MRZiC1VvKQ)
 - [Getting started with AWS IoT Core for LoRaWAN](https://www.youtube.com/watch?v=6-ZrdRjqdTk). 
-- [Bosch PLS Communication Interface - Technical Description](https://www.bosch-connectivity.com/media/product_detail_pls/parking_lot_sensor_pls_interface_description_v00_29_02_eu.pdf).
 - [STF Core](https://github.com/aws-samples/aws-stf-core-scorpio).
 - [AWS CDK Workshop](https://cdkworkshop.com/)
 - [JSON-LD, NGSI-LD, Digital Twins and Smart Data Models](https://www.youtube.com/watch?v=dfigPKx99Bs)
