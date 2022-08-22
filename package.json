@@ -1,8 +1,8 @@
 {
-  "name": "stf-smartparking-boschpls",
+  "name": "stf-dp-aicl",
   "version": "0.1.0",
   "bin": {
-    "stf-smartparking-boschpls": "bin/stf-smartparking-boschpls.js"
+    "stf-smartparking-boschpls": "bin/stf-dp-aicl.js"
   },
   "scripts": {
     "build": "tsc",

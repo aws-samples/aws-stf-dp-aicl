@@ -6,22 +6,30 @@ import { Runtime, Function, Code, CfnPermission } from 'aws-cdk-lib/aws-lambda'
 import { Queue } from 'aws-cdk-lib/aws-sqs'
 import { Construct } from 'constructs'
 
-export interface StfSmartparkingBoschplsStackProps extends StackProps{
+
+export interface StfDpAiclStackProps extends StackProps {
   stf_iot_sqs_arn: string, 
   thing_prefix: string
 }
 
-export class StfSmartparkingBoschplsStack extends Stack {
-  constructor(scope: Construct, id: string, props: StfSmartparkingBoschplsStackProps) {
+
+export class StfDpAiclStack extends Stack {
+  constructor(scope: Construct, id: string, props: StfDpAiclStackProps) {
     super(scope, id, props)
-    const iot_rule_name = `StfSmartParkingBoschPLS`
+
+    const iot_rule_name = `${props.thing_prefix.replace(/[^a-zA-Z0-9]/g, '')}Rule`
+    
     const stf_iot_sqs = Queue.fromQueueArn(this, 'StfIotSqs', props.stf_iot_sqs_arn)
 
-    // Lambda that decode Bosch PLS payload and create ParkingSpot entity
-    const lambda_boschpls_path  = `${__dirname}/lambda/boschpls`
-    const lambda_boschpls = new Function( this, 'LambdaBoschPls', {
+    
+    // LAMBDA THAT TRANSFORM PAYLOAD INTO NGSI-LD ENTITY 
+
+    // PATH OF THE LAMBDA
+    const lambda_modeling_path  = `${__dirname}/${props.thing_prefix.split('-').slice(-1)[0].toLowerCase()}`
+    
+    const lambda_modeling= new Function( this, 'ModelingLambda', {
         runtime: Runtime.NODEJS_14_X,
-        code: Code.fromAsset(lambda_boschpls_path),
+        code: Code.fromAsset(lambda_modeling_path),
         handler: 'index.handler',
         timeout: Duration.seconds(10),
         environment: {
@@ -31,7 +39,7 @@ export class StfSmartparkingBoschplsStack extends Stack {
     })
 
     // Permission to publish to the queue
-    lambda_boschpls.addToRolePolicy(new PolicyStatement({
+    lambda_modeling.addToRolePolicy(new PolicyStatement({
       actions: ["sqs:SendMessage"],
       resources: [`${stf_iot_sqs.queueArn}`]
     })) 
@@ -47,22 +55,22 @@ export class StfSmartparkingBoschplsStack extends Stack {
           actions: [ 
               {
                   lambda: {
-                      functionArn: lambda_boschpls.functionArn
+                      functionArn: lambda_modeling.functionArn
                   }
               }
           ]
       }
     })
 
-    // Grant IoT rule permission to invoke Lambda 
+    // GRANT IoT RULE PERMISSION TO INVOKE LAMBDA
     new CfnPermission(this, 'LambdaPermissionIotRule', {
       principal: `iot.amazonaws.com`,
       action: 'lambda:InvokeFunction',
-      functionName: lambda_boschpls.functionName,
+      functionName: lambda_modeling.functionName,
       sourceArn: `${iot_rule.attrArn}`
     })
 
-    // Destination Role to trigger iot rule 
+    // DESTINATION ROLE TO TRIGGER IoT RULE
     const role_lora_destination= new Role(this, 'RoleLoRaDestination', {
         assumedBy: new ServicePrincipal('iotwireless.amazonaws.com')
     })
@@ -76,8 +84,8 @@ export class StfSmartparkingBoschplsStack extends Stack {
         actions: ["iot:Publish"]
     }))
 
-    // Lora destination 
-    const lora_destination = new CfnDestination(this, 'LoraDestinationHandSanitizer', {
+    // LORA DESTINATION
+    const lora_destination = new CfnDestination(this, 'LoRaDestination', {
       expression: iot_rule_name,
       expressionType: 'RuleName',
       name: `${iot_rule_name}Destination`,

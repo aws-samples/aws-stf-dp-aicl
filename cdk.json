@@ -1,5 +1,5 @@
 {
-  "app": "npx ts-node --prefer-ts-exts bin/stf-smartparking-boschpls.ts",
+  "app": "npx ts-node --prefer-ts-exts bin/stf-dp-aicl.ts",
   "watch": {
     "include": [
       "**"
