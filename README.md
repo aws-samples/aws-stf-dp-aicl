@@ -48,7 +48,7 @@ You can deploy this stack multiple times for all the LoRaWAN sensors you want to
 
 <br>
 
-![Parameters](./docs/images/parameters.png)
+![Parameters](./docs/images/list_stack.png)
 
 <br>
 
