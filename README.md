@@ -13,11 +13,7 @@ This stack deploys the resources needed to ingest data from a LoRaWAN sensor usi
 
 <br>
 
-You can deploy this same stack multiple times for distinct sensors. We include samples of payload decoders (Lambda Function) for various sensors and applications. You can find the Lambda Function that decodes and transform the payload for each sensor in the folder [`lib`](./lib/):  
-
-- Smart Parking using [Bosch Parking Lot Sensor - PLS](https://www.bosch-connectivity.com/products/connected-mobility/parking-lot-sensor/downloads/). This stack uses the Smart Data Models [`ParkingSpot`](https://github.com/smart-data-models/dataModel.Parking/tree/master/ParkingSpot) 
-- Indoor Environment Monitoring using [Milesight AM103](https://www.milesight-iot.com/lorawan/sensor/am103/). This stack uses the Smart Data Models [IndoorEnvironmentObserved](https://github.com/smart-data-models/dataModel.Environment/tree/master/IndoorEnvironmentObserved) including properties from [AirQualityObserved](https://github.com/smart-data-models/dataModel.Environment/tree/master/AirQualityObserved)
-- Indoor Environment Monitoring using [Elsys ERS Sound](https://www.elsys.se/en/ers-sound/). This stack uses the Smart Data Models [IndoorEnvironmentObserved](https://github.com/smart-data-models/dataModel.Environment/tree/master/IndoorEnvironmentObserved) including properties from [AirQualityObserved](https://github.com/smart-data-models/dataModel.Environment/tree/master/AirQualityObserved)
+You can deploy same stack multiple times for distinct sensors. We include samples of payload decoders (Lambda Function) for various sensors and applications (see the [List](#list-of-sensors) below). 
 
 The name of the stack and the function used is extracted from the `thing_prefix` used. For example, if you use the prefix `SmartParking-BoschPLS`, the stack will extract the last part of the prefix in lower case `boschpls` and will use the Lambda in the folder with the same name `boshpls`. 
 
@@ -86,17 +82,44 @@ Once the stack is deployed you can [onboard]((https://docs.aws.amazon.com/iot/la
 
 <br>
 
-Voilà. You have everything ready. 
+Voilà. You have everything ready.
+
+## List of Sensors
+
+We provide ready to use stacks for a list of sensors. The list below will be updated over time.
+
+You can find the Lambda Function that decodes and transform the payload for each sensor in the folder [`lib`](./lib/). 
+
+### Indoor Environment Monitoring
+This stack uses the Smart Data Models [IndoorEnvironmentObserved](https://github.com/smart-data-models/dataModel.Environment/tree/master/IndoorEnvironmentObserved) including properties from [AirQualityObserved](https://github.com/smart-data-models/dataModel.Environment/tree/master/AirQualityObserved)
+
+- Indoor Environment Monitoring using [SenseCAP S2103](https://www.seeedstudio.com/SenseCAP-S2103-LoRaWAN-CO2-Temperature-and-Humidity-Sensor-p-5356.html). The sensor measures co2, temperature and relative humidity.
+
+- Indoor Environment Monitoring using [Milesight AM103](https://www.milesight-iot.com/lorawan/sensor/am103/). The sensor measures co2, temperature and relative humidity.
+
+- Indoor Environment Monitoring using [Elsys ERS Sound](https://www.elsys.se/en/ers-sound/). The sensor measures illuminance, noise level, temperature and relative humidity.
+
+
+### Smart Parking 
+This stack uses the Smart Data Models [`ParkingSpot`](https://github.com/smart-data-models/dataModel.Parking/tree/master/ParkingSpot) 
+
+- Smart Parking using [Bosch Parking Lot Sensor - PLS](https://www.bosch-connectivity.com/products/connected-mobility/parking-lot-sensor/downloads/). 
+
+
+
+
+
+<br>
 
 ## Additional Resources
 
 This section provides links to additional resources that may help deploy and operate this application: 
 
-- [Smart Territory Framework - Foundations for Smart Territories](https://youtu.be/4MRZiC1VvKQ)
+- [Smart Territory Framework - Foundations for Smart Territories](https://youtu.be/4MRZiC1VvKQ).
 - [Getting started with AWS IoT Core for LoRaWAN](https://www.youtube.com/watch?v=6-ZrdRjqdTk). 
 - [STF Core](https://github.com/aws-samples/aws-stf-core-scorpio).
-- [AWS CDK Workshop](https://cdkworkshop.com/)
-- [JSON-LD, NGSI-LD, Digital Twins and Smart Data Models](https://www.youtube.com/watch?v=dfigPKx99Bs)
+- [AWS CDK Workshop](https://cdkworkshop.com/).
+- [JSON-LD, NGSI-LD, Digital Twins and Smart Data Models](https://www.youtube.com/watch?v=dfigPKx99Bs).
 
 ## Security
 

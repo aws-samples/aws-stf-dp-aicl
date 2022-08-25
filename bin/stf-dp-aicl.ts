@@ -21,6 +21,13 @@ const stf_smartparking_boshpls_stack = new StfDpAiclStack(app, 'StfSmartparkingB
 })
 
 
+// STACK FOR THE SENSECAP S2103 INDOOR AND OUTDOOR ENVIRONMENT SENSOR 
+const stf_indoorenv_sensecaps2103_stack = new StfDpAiclStack(app, 'StfIndoorEnvSensecaps2103Stack', { 
+  thing_prefix: 'IndoorEnvironment-SENSECAPS2103', 
+  stf_iot_sqs_arn
+})
+
+
 // STACK FOR THE MILESIGHT AM103 INDOOR ENVIRONMENT SENSOR 
 const stf_indoorenv_am103_stack = new StfDpAiclStack(app, 'StfIndoorEnvAm103Stack', { 
   thing_prefix: 'IndoorEnvironment-AM103', 
